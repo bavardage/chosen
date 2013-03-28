@@ -426,9 +426,10 @@ class Chosen extends AbstractChosen
           $('#' + option.dom_id).css('display', 'none')
         else if not (@is_multiple and option.selected)
           found = false
+          found_group = false
           result_id = option.dom_id
           result = $("#" + result_id)
-
+          
           if regex.test option.html
             found = true
             results += 1
@@ -440,8 +441,21 @@ class Chosen extends AbstractChosen
                 if regex.test part
                   found = true
                   results += 1
+            #try with option group
+          if not found and option.group_array_index?
+            option_group = @results_data[option.group_array_index]
+            parts = option_group.label.replace(/\[|\]/g, "").split(" ")
+            if parts.length
+              for part in parts
+                if regex.test part
+                  found = true
+                  found_group = true
+                  results += 1
 
-          if found
+          if found_group
+              text = option.html
+              $("#" + @results_data[option.group_array_index].dom_id).css('display', 'list-item') if option.group_array_index?
+          else if found
             if searchText.length
               startpos = option.html.search zregex
               text = option.html.substr(0, startpos + searchText.length) + '</em>' + option.html.substr(startpos + searchText.length)
