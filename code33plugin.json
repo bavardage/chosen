@@ -1,0 +1,13 @@
+{
+	"scripts": [
+		"lib/abstract-chosen.coffee",
+		"lib/select-parser.coffee",
+		"chosen.jquery.coffee"
+	],
+	"styles": [
+		"chosen.css"
+	],
+	"dependencies": [
+		"lib.jquery"
+	]
+}
